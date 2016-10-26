@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>HCA Lunch App</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/datatables.min.css" type="text/css" rel="stylesheet"  />
+    
+    <!-- Custom CSS -->
+    <link href="css/round-about.css" rel="stylesheet">
+    
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <!-- DataTables JavaScript -->
+    <script src="js/datatables.min.js"></script>
+    
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function() {
+            $('#studentsTable').DataTable();
+        } );
+    </script>
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="StudentPage.aspx">For Students</a>
+                    </li>
+                    <li>
+                        <a href="admin.html">For Admin</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+        
+    <div class="col-lg-12"><h1 class="page-header">All Students</h1></div>
+        
+    <div class="col-lg-3"><button type="button" class="btn btn-primary">Print all balances</button></div>
+    <div class="col-lg-3"><a><button type="button" class="btn btn-primary">Print totals by item</button></a></div>
+    <div class="col-lg-3"></div>
+    <div class="col-lg-3"></div>
+     
+    <div class="col-lg-12"><br></div>
+            
+    <div class="col-lg-12">
+        <table id="studentsTable" class="display" cellspacing="0" width="100%">
+            <thead><tr><th>Name</th><th>Grade</th><th>Balance</th><th>Free & Reduced</th></tr></thead>
+            <tbody>
+                <tr><td><a href="student.html">Tiger Nixon</a></td><td>K  </td><td>$12.00</td><td>no</td></tr>
+                <tr><td><a href="student.html">Garrett Winters</a></td><td>1</td><td>$-8.00</td><td>no</td></tr>
+                <tr><td><a href="student.html">Ashton Cox</a></td><td>1</td><td>$50.00</td><td>no</td></tr>
+                <tr><td><a href="student.html">Cedric Kelly</a></td><td>1</td><td>$0.00</td><td>yes</td></tr>
+                <tr><td><a href="student.html">Airi Satou</a></td><td>2</td><td>$12.00</td><td>no</td></tr>
+                <tr><td><a href="student.html">Brielle Williamson</a></td><td>2</td><td>$40.00</td><td>no</td></tr>
+                <tr><td><a href="student.html">Herrod Chandler</a></td><td>2</td><td>$10.00</td><td>no</td></tr>
+                <tr><td><a href="student.html">Rhona Davidson</a></td><td>2</td><td>$20.00</td><td>no</td></tr>
+                <tr><td><a href="student.html">Colleen Hurst</a></td><td>3</td><td>$30.00</td><td>no</td></tr>
+                <tr><td><a href="student.html">Sonya Frost</a></td><td>3</td><td>$-10.00</td><td>no</td></tr>
+                <tr><td><a href="student.html">Jena Gaines</a></td><td>3</td><td>$50.00</td><td>no</td></tr>
+                <tr><td><a href="student.html">Quinn Flynn</a></td><td>4</td><td>$60.00</td><td>no</td></tr>
+                <tr><td><a href="student.html">Charde Marshall</a></td><td>4</td><td>$-10.00</td><td>no</td></tr>
+                <tr><td><a href="student.html">Haley Kennedy</a></td><td>5</td><td>$-8.00</td><td>no</td></tr>
+                <tr><td><a href="student.html">Tatyana Fitzpatrick</a></td><td>5</td><td>$10.00</td><td>no</td></tr>
+                <tr><td><a href="student.html">Michael Silva</a></td><td>5</td><td>$30.00</td><td>no</td></tr>
+            </tbody>
+        </table>
+    </div>		
+
+        
+        <hr>
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; Your Website 2014</p>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+        </footer>
+
+    </div>
+    <!-- /.container -->
+
+    <!-- jQuery -->
+    <!--<script src="js/jquery.js"></script>-->
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+    
+    
+    
+    <script type="text/javascript">
+        // For demo to fit into DataTables site builder...
+        $('#studentsTable')
+            .removeClass( 'display' )
+            .addClass('table table-striped table-bordered');
+    </script>
+</body>
+
+</html>

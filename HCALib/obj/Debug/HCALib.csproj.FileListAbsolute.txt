@@ -1,0 +1,13 @@
+C:\Lourdes\HCA\VS_HCAApp\HCAApp\HCALib\bin\Debug\HCA.HCAApp.HCALib.dll.config
+C:\Lourdes\HCA\VS_HCAApp\HCAApp\HCALib\bin\Debug\HCA.HCAApp.HCALib.dll
+C:\Lourdes\HCA\VS_HCAApp\HCAApp\HCALib\bin\Debug\HCA.HCAApp.HCALib.pdb
+C:\Lourdes\HCA\VS_HCAApp\HCAApp\HCALib\bin\Debug\ICSharpCode.SharpZipLib.dll
+C:\Lourdes\HCA\VS_HCAApp\HCAApp\HCALib\bin\Debug\Iesi.Collections.dll
+C:\Lourdes\HCA\VS_HCAApp\HCAApp\HCALib\bin\Debug\NHibernate.dll
+C:\Lourdes\HCA\VS_HCAApp\HCAApp\HCALib\bin\Debug\Iesi.Collections.pdb
+C:\Lourdes\HCA\VS_HCAApp\HCAApp\HCALib\bin\Debug\Iesi.Collections.xml
+C:\Lourdes\HCA\VS_HCAApp\HCAApp\HCALib\bin\Debug\NHibernate.pdb
+C:\Lourdes\HCA\VS_HCAApp\HCAApp\HCALib\bin\Debug\NHibernate.xml
+C:\Lourdes\HCA\VS_HCAApp\HCAApp\HCALib\obj\Debug\ResolveAssemblyReference.cache
+C:\Lourdes\HCA\VS_HCAApp\HCAApp\HCALib\obj\Debug\HCA.HCAApp.HCALib.dll
+C:\Lourdes\HCA\VS_HCAApp\HCAApp\HCALib\obj\Debug\HCA.HCAApp.HCALib.pdb

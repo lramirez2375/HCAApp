@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="HCA.HCAApp.HCALib"
+                   namespace="HCA.HCAApp.Domain">
+  <class name="Meal" table="Meals">
+    <id name="Id" column ="Id">
+      <generator class="identity" />
+    </id>
+    <property name="MealDescription" column="MealDescription" />
+    <property name="Price" column="Price" />
+    <property name="Image" column="Image" />
+    <many-to-one name="MealGroup" outer-join="true" column="MealGroupId" cascade="none"
+        class="HCA.HCAApp.Domain.MealGroup, HCA.HCAApp.HCALib" />
+    
+  </class>
+</hibernate-mapping>

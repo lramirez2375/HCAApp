@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="HCA.HCAApp.HCALib"
+                   namespace="HCA.HCAApp.Domain">
+  <class name="Purchase" table="Purchases">
+    <id name="Id" column ="Id">
+      <generator class="identity" />
+    </id>
+    <property name="PurchaseDate" column="PurchaseDate" />
+    <property name="PurchasePrice" column="PurchasePrice" />
+    
+    <many-to-one name="Meal" outer-join="true" column="MealId" cascade="none"
+        class="HCA.HCAApp.Domain.Meal, HCA.HCAApp.HCALib" />
+    <many-to-one name="Student" outer-join="true" column="StudentId" cascade="none"
+        class="HCA.HCAApp.Domain.Student, HCA.HCAApp.HCALib" />
+  </class>
+</hibernate-mapping>

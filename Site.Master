@@ -1,0 +1,150 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="HCAApp.SiteMaster" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head runat="server">
+    <title>HCA App</title>
+    <!-- Styles-->
+    <link href="~/Styles/Site.css" rel="stylesheet" type="text/css" />
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet"/>
+    <!-- Custom CSS -->
+    <link href="css/round-about.css" rel="stylesheet"/>
+    
+    <!-- Scripts-->
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/moment.min.js"></script>
+
+    <script type="text/javascript" charset="utf-8">
+        function displayCombos(containerName, controlName, list, title, descFieldName, idFieldName, eventName) {
+            var items = '';
+            $.each(list, function (i, v) {
+                items += "<li><a onclick='javascript:" + eventName + "(" + v[idFieldName] + ",\"" + v[descFieldName] + "\")'>" + v[descFieldName] + "</a></li>";
+            });
+
+            var dropdown =
+                "<div class='dropdown'>" +
+                "<button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown' id='" + controlName + "'>" +
+                title +
+                " <span class='caret'></span></button>" +
+                "<ul class='dropdown-menu'>" +
+                items +
+                "</ul>" +
+                "</div> ";
+
+            $("#" + containerName).html(dropdown);
+        }
+
+        function displayMultiselectCombos(strvalue, fieldName, lookupValues, addnull,descName) {
+            var strFieldName = '#' + fieldName;
+            var theField = $(strFieldName);
+            theField.children().remove();
+            var valSelected = '';
+            var aOptions = [];
+            if (addnull) {
+                aOptions.push(new SelectOption(0, "select one"));
+            }
+            $.each(lookupValues, function (idx, obj) {
+                aOptions.push(new SelectOption(obj.Id, obj[descName]));
+                if (strvalue == obj[descName]) {
+                    valSelected = obj.Id;
+                }
+            });
+            var sOptions = [];
+            $.each(aOptions, function (idx, option) {
+                sOptions[idx] = "<option value='" + option.id + "'>" + option.text + "</option>";
+            });
+            theField.append(sOptions.join(''));
+            theField.val(valSelected).attr('selected', true);
+        }
+
+        function SelectOption(id, text) {
+            this.id = id;
+            this.text = text;
+        }
+
+        //Utils
+        function FormatMoneyStr(n, c) {
+            c = isNaN(c = Math.abs(c)) ? 2 : c;
+            var res = parseFloat(n);
+            res = myToFixed(res, c);
+            return "$" + addCommas(res.toFixed(c));
+        }
+        function myToFixed(number, precision) {
+            var multiplier = Math.pow(10, precision + 1),
+                wholeNumber = Math.floor(number * multiplier);
+            return Math.round(wholeNumber / 10) * 10 / multiplier;
+        }
+        function addCommas(nStr) {
+            nStr += '';
+            var x = nStr.split('.');
+            var x1 = x[0];
+            var x2 = x.length > 1 ? '.' + x[1] : '';
+            var rgx = /(\d+)(\d{3})/;
+            while (rgx.test(x1)) {
+                x1 = x1.replace(rgx, '$1' + ',' + '$2');
+            }
+            return x1 + x2;
+        }
+    </script>
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form runat="server">
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="StudentPage.aspx">For Students</a>
+                    </li>
+                    <li>
+                        <a href="AdminPage.aspx">For Admin</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+        
+        <asp:ContentPlaceHolder ID="MainContent" runat="server">
+        </asp:ContentPlaceHolder>
+        
+        <hr>
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; Your Website 2014</p>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+        </footer>
+
+    </div>
+    <!-- /.container -->        
+        
+    </form>
+</body>
+</html>

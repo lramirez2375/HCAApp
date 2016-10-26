@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="HCA.HCAApp.HCALib"
+                   namespace="HCA.HCAApp.Domain">
+  <class name="StudentClass" table="Classes">
+    <id name="Id" column ="Id">
+      <generator class="identity" />
+    </id>
+    <property name="Class" column="Class" />
+    
+    
+  </class>
+</hibernate-mapping>
