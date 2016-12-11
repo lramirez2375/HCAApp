@@ -18,11 +18,30 @@
         var studentsTable = null;
         var menu = [];
         var mealSetup = new Object();
+        //
+        var selMeailId = 0;
+        var selMeal = null;
+        //
+        var selectedStudentId = 0;
+        var selectedStudent = null;
 
         $(function () {
             loadStudents();
             loadMealGroups();
+            loadStudentClasses();
+            //dates
             $('input[name="selectMenuDates"]').daterangepicker();
+
+            $('input[name = "txtRptFrom"]').daterangepicker({
+                singleDatePicker: true,
+                showDropdowns: true
+            });
+
+            $('input[name = "txtRptTo"]').daterangepicker({
+                singleDatePicker: true,
+                showDropdowns: true
+            });
+            //
             $("#selectMenuMealGroup").change(function () {
                 changeMealSelection($("#selectMenuMealGroup option:selected").val());
             });
@@ -31,8 +50,8 @@
             });
             $("#selectAdminMeal").change(function () {
                 debugger;
-                var selMeailId = $("#selectAdminMeal").val();
-                var selMeal = null;
+                selMeailId = $("#selectAdminMeal").val();
+                selMeal = null;
                 $.each(selAdminMeals, function (idx, m) {
                     if (selMeailId == m.Id) {
                         selMeal = m;
@@ -61,7 +80,73 @@
                     submitMeal();
                     return false;
                 });
+            $("#save-edit-meal")
+                .button()
+                .click(function () {
+                    saveMeal();
+                    return false;
+                });
+            $("#add-new-meal")
+                .button()
+                .click(function () {
+                    selMeailId = 0;
+                    saveMeal();
+                    return false;
+                });
+            $("#view-balances-rpt")
+                .button()
+                .click(function () {
+                    window.open("reports/RVBalancesReport.aspx", "_blank");
+                    return false;
+                });
+            $("#view-purchases-rpt")
+                .button()
+                .click(function () {
+                    var fromDate = $("#txtRptFrom").val();
+                    var toDate = $("#txtRptTo").val();
+                    window.open("reports/RVPurchasesReport.aspx?from=" + fromDate + "&to=" + toDate, "_blank");
+                    return false;
+                });
+            $("#add-new-student")
+                .button()
+                .click(function () {
+                    debugger;
+                    editStudent(0);
+                    return false;
+                });
+            //dialog related
+            $('body').on('show.bs.modal', function () {
+                $('#addStudent .modal-body').css('overflow-y', 'auto');
+
+                $('#addStudent .modal-body').css('max-height', $(window).height() * 0.7);
+
+            });
         });
+
+        function saveMeal() {
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                url: "AdminPageWS.asmx/SaveAddMeal",
+                data: "{" +
+                        "id:" + selMeailId + "," +
+                        "desc:'" + $("#txtSelectedAdminMeal").val() + "'," +
+                        "price:" + $("#txtSelectedAdminMealPrice").val() + "," +
+                        "image:'" + $("#txtSelectedAdminMealImage").val() + "'," +
+                        "mealGroupId:" + $("#selectAdminMealGroup option:selected").val() + 
+                      "}",
+                dataType: "json",
+                success: function (response) {
+                    changeAdminMealSelection($("#selectAdminMealGroup option:selected").val());
+                    //here clean
+                    selMeailId = 0;
+                    selMeal = null;
+                    $("#txtSelectedAdminMeal").val("");
+                    $("#txtSelectedAdminMealPrice").val("");
+                    $("#txtSelectedAdminMealImage").val("");
+                }
+            });
+        }
 
         function submitMeal() {
             $.ajax({
@@ -103,7 +188,7 @@
                     "bPaginate": false,
                     "aaData": students,
                     "aoColumns": [
-                        { "sTitle": "Id", "mDataProp": "Id" },
+                        { "sTitle": "LCPS Id", "mDataProp": "LCPS_Id" },
                         {  "sTitle": "Name",
                             "mDataProp": "Name",
                             "mRender": function ( data, type, row ) {
@@ -118,13 +203,44 @@
                                 return FormatMoneyStr(data);
                             }
                         },
-                        { "sTitle": "Free/Reduced", "mDataProp": "FreeReduced" }
+                        { 
+                            "sTitle": "", 
+                            "mDataProp": null,
+                            "mRender": function (data, type, row) {
+                                return "<a href='javascript:editStudent(" + row.Id + ");'>edit</a>";
+                            }
+                        }
                     ]
                 });
             } else {
                 studentsTable.fnClearTable();
                 studentsTable.fnAddData(students);
             }
+        }
+
+        function editStudent(studentId) {
+            debugger;
+            selectedStudentId = studentId;
+            selectedStudent = null;
+            if (studentId == 0) {
+                $("#txtStudentId").val("");
+                $("#txtStudentName").val("");
+                $("#txtParentName").val("");
+                $("#txtParentEmail").val("");
+
+            } else {
+                $.each(students, function (idx, obj) {
+                    if (studentId == obj.Id) {
+                        selectedStudent = obj;
+                    }
+                });
+                $("#txtStudentId").val(selectedStudent.LCPS_Id);
+                $("#txtStudentName").val(selectedStudent.Name);
+                $("#txtParentName").val(selectedStudent.Parent);
+                $("#txtParentEmail").val(selectedStudent.Email);
+                $("#selectStudentClasses").val(selectedStudent.ClassId);
+            }
+            $("#addStudent").modal("show");
         }
 
         function loadMealGroups() {
@@ -181,17 +297,88 @@
             });
             $("#tdMenuResult").html(menuText);
         }
+
+        function loadStudentClasses() {
+            debugger;
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                url: "StudentPageWS.asmx/GetAllStudentClasses",
+                dataType: "json",
+                success: function (response) {
+                    debugger;
+                    var studentClasses = (typeof response.d) == 'string' ? eval('(' + response.d.replace(/\/Date\((\d+)\)\//gi, "new Date($1)") + ')') : response.d;
+                    displaySingleCombos('', 'selectStudentClasses', studentClasses, false,"Class");
+
+                }
+            });
+
+        }
         
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <!-- Modal -->
+  <div class="modal fade" id="addStudent" role="dialog" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Add or edit a student</h4>
+        </div>
+        <div class="modal-body">
+           <table>
+           <thead>
+           </thead>
+           <tbody class="table">
+           <tr>
+              <td>LCPS Student Id</td>
+              <td><input type="text" name="txtStudentId" id="txtStudentId" /></td>
+           </tr>
+           <tr>
+              <td>Student Name</td>
+              <td><input type="text" name="txtStudentName" id="txtStudentName" /></td>
+           </tr>
+           <tr>
+              <td>Parent Name</td>
+              <td><input type="text" name="txtParentName" id="txtParentName" /></td>
+           </tr>
+           <tr>
+              <td>Contact email</td>
+              <td><input type="text" name="txtParentEmail" id="txtParentEmail" /></td>
+           </tr>
+           <tr>
+              <td>Class</td>
+              <td><select id="selectStudentClasses" class="selectpicker" data-size="8"></select></td>
+           </tr>
+           </tbody>
+           </table>
+           
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-tertiary" data-dismiss="modal">Save</button>
+        </div>
+      </div>
+      
+    </div>
+    </div>  
+    <%--End modal--%>
     <div class="col-lg-12"><h1 class="page-header">All Students</h1></div>
         
-    <div class="col-lg-3"><button type="button" class="btn btn-primary">Print all balances</button></div>
-    <div class="col-lg-3"><a><button type="button" class="btn btn-primary">Print totals by item</button></a></div>
-    <div class="col-lg-3"></div>
-    <div class="col-lg-3"></div>
-     
+    <div class="col-lg-2"><button type="button" id="view-balances-rpt" class="btn btn-primary">Print all balances</button></div>
+    <div class="col-lg-8">
+        <input type="text" name="txtRptFrom" id="txtRptFrom" value="<%=DateTime.Now.AddMonths(-1)%>" /><br/>
+        to<br/>
+        <input type="text" name="txtRptTo" id="txtRptTo" value="<%=DateTime.Now%>" /><br/>
+        <button type="button" id="view-purchases-rpt" class="btn btn-primary">Print totals by item</button>
+    </div>
+    
+    <div class="col-lg-2">
+        <%--<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addStudent">Add new student</button>--%>
+        <button type="button" class="btn btn-info btn-lg" id="add-new-student">Add new student</button>
+    </div>
     <div class="col-lg-12"><br></div>
             
     <div class="col-lg-12">
@@ -222,10 +409,12 @@
          Price:<input type="text" id="txtSelectedAdminMealPrice" />
      </div>
      <div class="col-lg-3">
-         Price:<input type="text" id="txtSelectedAdminMealImage" />
+         Image:<input type="text" id="txtSelectedAdminMealImage" />
      </div>
      <div class="col-lg-3">
-         <button id="save-edit-meal" type="button" class="btn btn-primary">save</button>&nbsp;&nbsp;<button id="add-new-meal" type="button" class="btn btn-primary">add new</button>
+         <button id="save-edit-meal" type="button" class="btn btn-primary">save</button>
+         &nbsp;&nbsp;
+         <button id="add-new-meal" type="button" class="btn btn-primary">add new</button>
      </div>
      
      <%--Menu planner --%>
@@ -256,5 +445,32 @@
         $('#studentsTable')
             .removeClass('display')
             .addClass('table table-striped table-bordered');
+        //dialog events
+        $("#addStudent").on('hide.bs.modal', function () {
+            var LCPSId = $("#txtStudentId").val();
+            var studentName = $("#txtStudentName").val();
+            var parent = $("#txtParentName").val();
+            var email = $("#txtParentEmail").val();
+            var classId = $("#selectStudentClasses option:selected").val();
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                url: "AdminPageWS.asmx/SaveStudent",
+                data: "{" +
+                        "id:" + selectedStudentId + "," +
+                        "lcpsid:'" + LCPSId + "'," +
+                        "studentName:'" + studentName + "'," +
+                        "parent:'" + parent + "'," +
+                        "email:'" + email + "'," +
+                        "classId:" + classId +
+                      "}",
+                dataType: "json",
+                success: function (response) {
+                    students = (typeof response.d) == 'string' ? eval('(' + response.d.replace(/\/Date\((\d+)\)\//gi, "new Date($1)") + ')') : response.d;
+                    initTable();
+                }
+            });
+        });
+        
     </script>
 </asp:Content>

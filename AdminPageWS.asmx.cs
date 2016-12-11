@@ -39,5 +39,24 @@ namespace HCA.HCAApp
         public void SaveMeal(MenuForm[] menus) {
             controller.SaveMeal(menus);
         }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public void SaveAddMeal(int id, string desc, decimal price, string image, int mealGroupId) {
+            controller.SaveAddMeal(id, desc, price, image, mealGroupId);
+        }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public List<StudentForm> SaveStudent(int id, string lcpsid,string studentName, string parent, string email, int classId) {
+            controller.SaveStudent(id, lcpsid,studentName, parent, email, classId);
+            return controller.GetAllStudents();
+        }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public void DeleteMealFromMenu(int mealId, string date) {
+            controller.DeleteMealFromMenu(mealId,date);
+        }
     }
 }

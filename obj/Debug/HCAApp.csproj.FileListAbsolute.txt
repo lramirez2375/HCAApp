@@ -16,3 +16,5 @@ C:\Lourdes\HCA\VS_HCAApp\HCAApp\HCAApp\bin\Iesi.Collections.xml
 C:\Lourdes\HCA\VS_HCAApp\HCAApp\HCAApp\obj\Debug\HCA.HCAApp.HCAApp.dll
 C:\Lourdes\HCA\VS_HCAApp\HCAApp\HCAApp\obj\Debug\HCA.HCAApp.HCAApp.pdb
 C:\Lourdes\HCA\VS_HCAApp\HCAApp\HCAApp\obj\Debug\HCAApp.csprojResolveAssemblyReference.cache
+C:\Lourdes\HCA\VS_HCAApp\HCAApp\HCAApp\obj\Debug\RdlCompile.cache
+C:\Lourdes\HCA\VS_HCAApp\HCAApp\HCAApp\obj\Debug\RdlCompile.compiled

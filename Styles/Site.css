@@ -304,3 +304,14 @@ textarea
     text-align: right;
     padding-right: 10px;
 }
+
+
+.bootstrap-select.btn-group .dropdown-menu {
+    z-index: 2000;
+}
+.bootstrap-select.btn-group .dropdown-menu.inner {
+    position: static;
+}
+.modal { overflow: visible; }
+.modal-body { overflow-y: visible !important; }
+

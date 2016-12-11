@@ -33,5 +33,31 @@ namespace HCA.HCAApp
         public List<PurchaseForm> GetStudentPurchases(int id) {
             return controller.GetStudentPurchases(id);
         }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public List<StudentTransferForm> GetStudentMoneyTransfers(int id) {
+            return controller.GetStudentTransfers(id);
+        }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public List<StudentTransferForm> AddEditCheckToStudent(int id, int transferId,string checkNo, decimal checkAmount) {
+            controller.AddCheckToStudent(id, transferId, checkNo, checkAmount);
+            return controller.GetStudentTransfers(id);
+        }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public List<StudentTransferForm> DeleteCheckFromStudent(int id, int transferId) {
+            controller.DeleteCheckFromStudent(transferId);
+            return controller.GetStudentTransfers(id);
+        }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public void EditParent(int id, string parentName, string parentEmail) {
+            controller.EditParent(id, parentName, parentEmail);
+        }
     }
 }

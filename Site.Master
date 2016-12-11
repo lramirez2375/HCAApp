@@ -18,6 +18,29 @@
     <script src="js/moment.min.js"></script>
 
     <script type="text/javascript" charset="utf-8">
+        function displaySingleCombos(strvalue, fieldName, lookupValues, addnull,descFieldName) {
+            var strFieldName = '#' + fieldName;
+            var theField = $(strFieldName);
+            theField.children().remove();
+            var valSelected = '';
+            var aOptions = [];
+            if (addnull) {
+                aOptions.push(new SelectOption(0, "none"));
+            }
+            $.each(lookupValues, function (idx, obj) {
+                aOptions.push(new SelectOption(obj.Id, obj[descFieldName]));
+                if (strvalue == obj[descFieldName]) {
+                    valSelected = obj.Id;
+                }
+            });
+            var sOptions = [];
+            $.each(aOptions, function (idx, option) {
+                sOptions[idx] = "<option value='" + option.id + "'>" + option.text + "</option>";
+            });
+            theField.append(sOptions.join(''));
+            theField.val(valSelected).attr('selected', true);
+        }
+        
         function displayCombos(containerName, controlName, list, title, descFieldName, idFieldName, eventName) {
             var items = '';
             $.each(list, function (i, v) {
@@ -26,13 +49,13 @@
 
             var dropdown =
                 "<div class='dropdown'>" +
-                "<button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown' id='" + controlName + "'>" +
-                title +
-                " <span class='caret'></span></button>" +
-                "<ul class='dropdown-menu'>" +
-                items +
-                "</ul>" +
-                "</div> ";
+                    "<button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown' id='" + controlName + "'>" +
+                        title +
+                            " <span class='caret'></span></button>" +
+                                "<ul class='dropdown-menu'>" +
+                                    items +
+                                        "</ul>" +
+                                            "</div> ";
 
             $("#" + containerName).html(dropdown);
         }
@@ -114,7 +137,13 @@
                         <a href="StudentPage.aspx">For Students</a>
                     </li>
                     <li>
-                        <a href="AdminPage.aspx">For Admin</a>
+                        <a href="ManageStudent.aspx">Manage Students</a>
+                    </li>
+                    <li>
+                        <a href="AdminMeals.aspx">Meals planner</a>
+                    </li>
+                    <li>
+                        <a href="MenuAdmin.aspx">Menu planner</a>
                     </li>
                 </ul>
             </div>
